@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Form with Table</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid black;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+  <h2>Form with Table</h2>
+  <form id="form">
+    <label for="inputField">Full Name:</label>
+    <input type="text" id="inputField" required><br><br>
+
+    <label>Gender:</label>
+    <input type="radio" id="option1" name="options" value="Male">
+    <label for="option1">Male</label>
+    <input type="radio" id="option2" name="options" value="Female">
+    <label for="option2">Female</label><br><br>
+
+    <label for="notes">Notes Area:</label><br>
+    <textarea id="notes" rows="4" cols="50"></textarea><br><br>
+
+    <input type="button" value="Add Row" onclick="addRow()">
+  </form>
+
+  <table id="dataTable">
+    <tr>
+      <th>Full Name</th>
+      <th>Gender</th>
+      <th>Notes</th>
+      <th>Action</th>
+    </tr>
+  </table>
+
+  <script>
+    function addRow() {
+      var inputField = document.getElementById('inputField').value;
+      var radioValue = document.querySelector('input[name="options"]:checked');
+      var radioOption = radioValue ? radioValue.value : '';
+      var notes = document.getElementById('notes').value;
+
+      if (!inputField || !radioOption || !notes) {
+        alert("Please fill in all the fields.");
+        return;
+      }
+
+      var table = document.getElementById('dataTable');
+      var newRow = table.insertRow(table.rows.length);
+
+      var cell1 = newRow.insertCell(0);
+      var cell2 = newRow.insertCell(1);
+      var cell3 = newRow.insertCell(2);
+      var cell4 = newRow.insertCell(3);
+
+      cell1.innerHTML = inputField;
+      cell2.innerHTML = radioOption;
+      cell3.innerHTML = notes;
+      cell4.innerHTML = '<button onclick="deleteRow(this)">Delete</button>';
+
+      // Reset form fields after adding row
+      document.getElementById('form').reset();
+    }
+
+    function deleteRow(btn) {
+      var row = btn.parentNode.parentNode;
+      row.parentNode.removeChild(row);
+    }
+  </script>
+</body>
+</html>
